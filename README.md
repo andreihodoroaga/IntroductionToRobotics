@@ -3,6 +3,7 @@ This repository contains the assignments for the "Introduction to Robotics" cour
 
 ## Table of contents
 - [Homework 1](#homework-1)
+- [Homework 2](#homework-2)
 
 ## Homework 1
 ### Requirement
@@ -12,7 +13,22 @@ Control each channel (red, green, blue) in an RBG LED using individual potentiom
 [Homework 1 file](homework1/homework1.ino)
 
 ### Photo
-![Alt text](homework1/photo.jpg)
+![Homework 1 photo](homework1/photo.jpg)
 
 ### Video
 https://www.youtube.com/watch?v=MONQZTE_G2A
+
+## Homework 2
+### Requirement
+Simulate an elevator using at least 3 buttons and 3 LEDs corresponding to the floors. <br>
+Pressing a button should move the elevator to the associated floor. <br>
+While the elevator is moving between floors, there should be an additional LED signaling this.
+
+### File
+[Homework 2 file](homework2/homework2.ino)
+
+### Photo
+![Homework 2 photo](homework2/photo.jpg)
+
+### Video
+https://www.youtube.com/watch?v=TdfMBzYgRU8
