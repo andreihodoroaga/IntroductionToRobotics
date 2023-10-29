@@ -1,20 +1,23 @@
 const int buttonPinFloor0 = 2;
 const int buttonPinFloor1 = 4;
 const int buttonPinFloor2 = 6;
+const int operationalElevatorLedPin = 8;
+const int floor0LedPin = 10;
+const int floor1LedPin = 11;
+const int floor2LedPin = 12;
 
-byte buttonStateFloor0 = 0;
-byte buttonStateFloor1 = 0;
-byte buttonStateFloor2 = 0;
-byte lastButtonStateFloor0 = 0;
-byte lastButtonStateFloor1 = 0;
-byte lastButtonStateFloor2 = 0;
+byte buttonStateFloor0 = LOW;
+byte buttonStateFloor1 = LOW;
+byte buttonStateFloor2 = LOW;
+byte lastButtonStateFloor0 = LOW;
+byte lastButtonStateFloor1 = LOW;
+byte lastButtonStateFloor2 = LOW;
 
 const int buttonDebounceDelay = 75;
 unsigned long lastDebounceTimeFloor0 = 0;
 unsigned long lastDebounceTimeFloor1 = 0;
 unsigned long lastDebounceTimeFloor2 = 0;
 
-const int operationalElevatorLedPin = 8;
 byte operationalElevatorLedState = LOW;
 unsigned long previousTimeForElevatorLed = 0;
 
@@ -30,17 +33,13 @@ const int durationPerFloor = 1000;
 const int operationalLedBlinkDuration = 500;
 const int closingElevatorDoorsDuration = 1500;
 
-const int floor0LedPin = 10;
-const int floor1LedPin = 11;
-const int floor2LedPin = 12;
-
 byte floor0LedState = LOW;
 byte floor1LedState = LOW;
 byte floor2LedState = LOW;
 
-unsigned long previousTimeLed0 = 0;
-unsigned long previousTimeLed1 = 0;
-unsigned long previousTimeLed2 = 0;
+const int floor0 = 0;
+const int floor1 = 1;
+const int floor2 = 2;
 
 unsigned long currentMillis = 0;
 
@@ -62,43 +61,33 @@ void loop() {
   buttonStateFloor1 = getButtonState(buttonPinFloor1, buttonStateFloor1, lastButtonStateFloor1, lastDebounceTimeFloor1);
   buttonStateFloor2 = getButtonState(buttonPinFloor2, buttonStateFloor2, lastButtonStateFloor2, lastDebounceTimeFloor2);
 
-  elevator();
+  controlElevator();
 
-  if (isElevatorMoving) {
-    return;
+  if (!isElevatorMoving) {
+    updateLedAtFloor(currentFloor, HIGH);
+    handleButtonInput();
   }
+}
 
-  if (currentFloor == 0) {
-    digitalWrite(floor0LedPin, HIGH);
-  } else if (currentFloor == 1) {
-    digitalWrite(floor1LedPin, HIGH);
-  } else {
-    digitalWrite(floor2LedPin, HIGH);
-  }
-
-  if (buttonStateFloor0 == 1 && currentFloor != 0) {
-    moveElevatorToFloor(0);
+void handleButtonInput() {
+  if (buttonStateFloor0 == HIGH && currentFloor != floor0) {
+    moveElevatorToFloor(floor0);
   } 
-  if (buttonStateFloor1 == 1 && currentFloor != 1) {
-    moveElevatorToFloor(1);
+  if (buttonStateFloor1 == HIGH && currentFloor != floor1) {
+    moveElevatorToFloor(floor1);
   }
-  if (buttonStateFloor2 == 1 && currentFloor != 2) {
-    moveElevatorToFloor(2);
+  if (buttonStateFloor2 == HIGH && currentFloor != floor2) {
+    moveElevatorToFloor(floor2);
   }  
 }
 
 void moveElevatorToFloor(int destinationFloor) {
-  if (isElevatorMoving) {
-    return;
-  }
-
   timeElevatorButtonPressed = currentMillis;
-
   destination = destinationFloor;
   isElevatorMoving = 1;
 }
 
-void elevator() {
+void controlElevator() {
   if (isElevatorMoving) {
     if (currentMillis - timeElevatorButtonPressed < closingElevatorDoorsDuration) {
       updateLedAtFloor(currentFloor, HIGH);
@@ -111,15 +100,15 @@ void elevator() {
     blinkLed(operationalElevatorLedPin, operationalElevatorLedState, previousTimeForElevatorLed, operationalLedBlinkDuration);
 
     floorsTraveled = abs(destination - currentFloor);
-
     if (floorsTraveled == 2) {
-      if (timeElevatorStartedMoving != 0 && 
-          currentMillis > timeElevatorStartedMoving + movingBetweenTwoFloorsDuration &&
+      if (currentMillis > timeElevatorStartedMoving + movingBetweenTwoFloorsDuration &&
           currentMillis < timeElevatorStartedMoving + movingBetweenTwoFloorsDuration + durationPerFloor
-      )
-        blinkLed(floor1LedPin, floor1LedState, previousTimeLed1, durationPerFloor);
-      else
-        digitalWrite(floor1LedPin, 0);
+      ) {
+        updateLedAtFloor(floor1, HIGH);
+      }
+      else {
+        updateLedAtFloor(floor1, LOW);
+      }
     }
 
     if (currentMillis > timeElevatorStartedMoving + movingBetweenTwoFloorsDuration * floorsTraveled) {
@@ -133,9 +122,9 @@ void elevator() {
 }
 
 void updateLedAtFloor(int floor, byte newState) {
-  if (floor == 0) {
+  if (floor == floor0) {
     digitalWrite(floor0LedPin, newState);
-  } else if (floor == 1) {
+  } else if (floor == floor1) {
     digitalWrite(floor1LedPin, newState);
   } else {
     digitalWrite(floor2LedPin, newState);
