@@ -12,8 +12,12 @@ Control each channel (red, green, blue) in an RBG LED using individual potentiom
 ### File
 [Homework 1 file](homework1/homework1.ino)
 
-### Photo
+
+<details><summary><h3>Photo</h3></summary>
+
 ![Homework 1 photo](homework1/photo.jpg)
+
+</details>
 
 ### Video
 https://www.youtube.com/watch?v=MONQZTE_G2A
@@ -27,8 +31,11 @@ While the elevator is moving between floors, there should be an additional LED s
 ### File
 [Homework 2 file](homework2/homework2.ino)
 
-### Photo
+<details><summary><h3>Photo</h3></summary>
+
 ![Homework 2 photo](homework2/photo.jpg)
+
+</details>
 
 ### Video
 https://www.youtube.com/watch?v=TdfMBzYgRU8
