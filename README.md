@@ -4,6 +4,7 @@ This repository contains the assignments for the "Introduction to Robotics" cour
 ## Table of contents
 - [Homework 1](#homework-1)
 - [Homework 2](#homework-2)
+- [Homework 3](#homework-3)
 
 ## Homework 1
 ### Requirement
@@ -39,3 +40,22 @@ While the elevator is moving between floors, there should be an additional LED s
 
 ### Video
 https://www.youtube.com/watch?v=TdfMBzYgRU8
+
+## Homework 3
+### Requirement
+Control a 7-segment display using a joystick.<br>
+There should be a blinking segment to indicate the current selected segment.<br>
+Upon pressing on the joystick, the segment should switch its state (from ON to OFF or from OFF to ON).<br>
+The display should reset by long pressing the joystick.
+
+### File
+[Homework 3 file](homework3/homework3.ino)
+
+<details><summary><h3>Photo</h3></summary>
+
+![Homework 3 photo](homework3/photo.jpg)
+
+</details>
+
+### Video
+https://www.youtube.com/watch?v=aXNt2QwVl8E
