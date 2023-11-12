@@ -5,6 +5,7 @@ This repository contains the assignments for the "Introduction to Robotics" cour
 - [Homework 1](#homework-1)
 - [Homework 2](#homework-2)
 - [Homework 3](#homework-3)
+- [Homework 4](#homework-4)
 
 ## Homework 1
 ### Requirement
@@ -59,3 +60,22 @@ The display should reset by long pressing the joystick.
 
 ### Video
 https://www.youtube.com/watch?v=aXNt2QwVl8E
+
+## Homework 4
+### Requirement
+Implement a timer using a 4-digit 7-segment segment display and three buttons. <br>
+There should be one that button has start/pause functionality, one lap button, and one reset button. <br>
+When the reset button is first pressed, it should reset the timer to 000.0 and toggle "lap viewing mode". <br>
+In lap viewing mode, pressing the lap button should cycle through the last 4 saved laps. Pressing the reset button again should reset the timer completely.
+
+### File
+[Homework 4 file](homework4/homework4.ino)
+
+<details><summary><h3>Photo</h3></summary>
+
+![Homework 4 photo](homework4/photo.jpg)
+
+</details>
+
+### Video
+https://www.youtube.com/watch?v=Ycb3rkpeRDs
