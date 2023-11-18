@@ -6,6 +6,7 @@ This repository contains the assignments for the "Introduction to Robotics" cour
 - [Homework 2](#homework-2)
 - [Homework 3](#homework-3)
 - [Homework 4](#homework-4)
+- [Homework 5](#homework-5)
 
 ## Homework 1
 ### Requirement
@@ -79,3 +80,22 @@ In lap viewing mode, pressing the lap button should cycle through the last 4 sav
 
 ### Video
 https://www.youtube.com/watch?v=Ycb3rkpeRDs
+
+## Homework 5
+### Requirement
+Develop an intelligent environmental monitoring system featuring an ultrasonic sensor and an LDR sensor. <br>
+Implement an interactive menu to access various functionalities. <br>
+Enable users to establish alert thresholds for sensors, such as proximity warnings from the ultrasonic sensor or low light levels detected by the LDR sensor.<br>
+Upon triggering an alert, signify the event by having an RGB LED turn red; otherwise, maintain a green color or any user-selected color from the menu. Additionally, include options for adjusting the sensor sampling rate and viewing real-time as well as the last 10 recorded sensor readings.
+
+### File
+[Homework 5 file](homework5/homework5.ino)
+
+<details><summary><h3>Photo</h3></summary>
+
+![Homework 5 photo](homework5/photo.jpg)
+
+</details>
+
+### Video
+https://www.youtube.com/watch?v=MPQRv6WlfSU
