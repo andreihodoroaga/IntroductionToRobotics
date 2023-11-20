@@ -1,5 +1,6 @@
 #include "Menu.h"
 #include "EEPROM.h"
+#include "EEPROMVariables.h"
 
 // RGB led
 const int rgbLedRedPin = 2;
@@ -25,6 +26,7 @@ ActionHandler actionHandler;
 int sensorSamplingsInterval = 0;
 unsigned long lastSensorReadingTime = 0;
 unsigned long lastSensorCurrentReadingTime = 0;
+const int readingsSize = 10;
 
 int ultrasonicAlertThreshold = 0;
 int photocellAlertThreshold = 0;
@@ -74,13 +76,13 @@ void handleMenuActions() {
 }
 
 void getStoredVariables() {
-  EEPROM.get(0, sensorSamplingsInterval);
-  EEPROM.get(2, ultrasonicAlertThreshold);
-  EEPROM.get(4, photocellAlertThreshold);
-  EEPROM.get(5, storedRedValue);
-  EEPROM.get(6, storedGreenValue);
-  EEPROM.get(7, storedBlueValue);
-  EEPROM.get(8, automaticMode);
+  EEPROM.get(EEPROMVariables::sensorsSamplingIntervalIndex, sensorSamplingsInterval);
+  EEPROM.get(EEPROMVariables::ultrasonicAlertThresholdIndex, ultrasonicAlertThreshold);
+  EEPROM.get(EEPROMVariables::photocellAlertThresholdIndex, photocellAlertThreshold);
+  EEPROM.get(EEPROMVariables::rgbLedRedIndex, storedRedValue);
+  EEPROM.get(EEPROMVariables::rgbLedGreenIndex, storedGreenValue);
+  EEPROM.get(EEPROMVariables::rgbLedBlueIndex, storedBlueValue);
+  EEPROM.get(EEPROMVariables::automaticModeIndex, automaticMode);
 }
 
 void displayCurrentSensorReadings() {
@@ -112,10 +114,10 @@ void displayCurrentSensorSettings() {
 
 void displayLoggedData() {
   Serial.println("Logged ultrasonic readings: ");
-  displayReadings(10, 10);
+  displayReadings(EEPROMVariables::ultrasonicReadingsStartIndex, readingsSize);
 
   Serial.println("Logged photocell readings: ");
-  displayReadings(30, 10);
+  displayReadings(EEPROMVariables::photocellReadingsStartIndex, readingsSize);
 }
 
 void readSensors() {
@@ -125,10 +127,10 @@ void readSensors() {
   if (millis() - lastSensorReadingTime > 1000 * sensorSamplingsInterval) {
     // read from sensors
     int newUltrasonicValue = getUltrasonicSensorReading();
-    addReadingToEEPROM(10, 10, newUltrasonicValue);
+    addReadingToEEPROM(EEPROMVariables::ultrasonicReadingsStartIndex, readingsSize, newUltrasonicValue);
 
     int newPhotocellValue = getPhotocellReading();
-    addReadingToEEPROM(30, 10, newPhotocellValue);
+    addReadingToEEPROM(EEPROMVariables::photocellReadingsStartIndex, readingsSize, newPhotocellValue);
 
     // if there is an object too close to the ultrasonic or if there it gets too dark
     alert = newUltrasonicValue < ultrasonicAlertThreshold || newPhotocellValue < photocellAlertThreshold;
