@@ -7,6 +7,7 @@ This repository contains the assignments for the "Introduction to Robotics" cour
 - [Homework 3](#homework-3)
 - [Homework 4](#homework-4)
 - [Homework 5](#homework-5)
+- [Homework 6](#homework-6)
 
 ## Homework 1
 ### Requirement
@@ -99,3 +100,19 @@ Upon triggering an alert, signify the event by having an RGB LED turn red; other
 
 ### Video
 https://www.youtube.com/watch?v=MPQRv6WlfSU
+
+## Homework 6
+### Requirement
+Develop a Bomberman-like game using an 8x8 LED matrix. Implement various features such as a menu, animations, etc.
+
+### File
+[Homework 6 file](homework6/homework6.ino)
+
+<details><summary><h3>Photo</h3></summary>
+
+![Homework 6 photo](homework6/photo.jpg)
+
+</details>
+
+### Video
+https://www.youtube.com/watch?v=tHLFfbs_FkI
