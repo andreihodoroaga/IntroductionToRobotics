@@ -11,7 +11,7 @@ This repository contains the assignments for the "Introduction to Robotics" cour
 
 ## Homework 1
 ### Requirement
-Control each channel (red, green, blue) in an RBG LED using individual potentiometers.
+Control each channel (red, green, blue) in an RGB LED using individual potentiometers.
 
 ### File
 [Homework 1 file](homework1/homework1.ino)
