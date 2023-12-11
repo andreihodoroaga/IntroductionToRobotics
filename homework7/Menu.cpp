@@ -7,10 +7,8 @@ void Menu::displayGreetingsOnLCD() {
   }
 
   if (displayGreetings) {
-    lcd.setCursor(0, 0);
-    lcd.print("Welcome to");
-    lcd.setCursor(0, 1);
-    lcd.print("Bomberman!");
+    displayTextOnLCD(greetingsTexts[0], 0, 0, 0);
+    displayTextOnLCD(greetingsTexts[1], 0, 0, 1);
     displayGreetings = false;
   }
   if (millis() - greetingsShownTime > displayIntroMessageTime) {
@@ -26,7 +24,7 @@ void Menu::displayLCDMenu() {
   if (displayBomb) {
     lcd.home();
     // % 2 because we always display only 2 rows
-    lcd.setCursor(currMenuBombCol % 2, currMenuBombRow % 2);
+    lcd.setCursor(currMenuBombCol, currMenuBombRow % 2);
     lcd.write(bombCharIndex);
     displayBomb = false;
   }
@@ -42,7 +40,7 @@ void Menu::displayTextOnLCD(const char* text, int textStartIndex, int col, int l
   lcd.setCursor(col, line);
 
   int textLength = strlen(text);
-  for (int i = 0; i < min(textLength, 15); i++) {
+  for (int i = 0; i < min(textLength, lcdCols - 1); i++) {
     int charIndex = textStartIndex + i;
     if (charIndex < textLength) {
       lcd.write(text[charIndex]);
@@ -91,9 +89,9 @@ void Menu::displayCurrentMenuOptions() {
 }
 
 void Menu::addBrightnessValueOnDisplay() {
-  lcd.setCursor(9, 0);
+  lcd.setCursor(brightnessNumberColIdx, 0);
   lcd.print(eepromHandler.getLcdBrightness());
-  lcd.setCursor(9, 1);
+  lcd.setCursor(brightnessNumberColIdx, 1);
   lcd.print(eepromHandler.getMatrixBrightness());
 }
 
@@ -218,24 +216,22 @@ void Menu::displayGameInfo(int bombsUsed, unsigned long elapsedTime) {
   oldElapsedTime = elapsedTime;
   lcd.clear();
   lcd.setCursor(0, 0);
-  lcd.print("Bombs used: ");
+  lcd.print(gameInfoTexts[0]);
   lcd.print(bombsUsed);
   lcd.write(bombCharIndex);
   lcd.setCursor(0, 1);
-  lcd.print("Elapsed time: ");
+  lcd.print(gameInfoTexts[1]);
   lcd.print(elapsedTime);
 }
 
-int lastEndGameLetterIdx = 0;
-unsigned long lastEndGameLetterChange = 0;
-
 void Menu::displayEndGameMessage(const char* text) {
-  if (millis() - lastEndGameLetterChange > 500) {
+  if (millis() - lastEndGameLetterChange > endGameMessageUpdateRate) {
     lcd.clear();
     lcd.print(text);
     lcd.setCursor(0, 1);
-    displayTextOnLCD("Press on the joystick to continue...", lastEndGameLetterIdx, 0, 1);
+    displayTextOnLCD(endGameContinueText, lastEndGameLetterIdx, 0, 1);
     lastEndGameLetterChange = millis();
-    lastEndGameLetterIdx = (lastEndGameLetterIdx + 1) % 22;
+    int textNotOnScreenSize = strlen(endGameContinueText) - lcdCols + 2; 
+    lastEndGameLetterIdx = (lastEndGameLetterIdx + 1) % textNotOnScreenSize;
   }
 }

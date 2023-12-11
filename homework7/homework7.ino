@@ -46,11 +46,13 @@ unsigned long bombPlacementTime = 0;
 bool bombPlaced = false;
 const int bombExplosionTime = 1600;
 unsigned long explodeAnimationTime = 400;
+const int startDelayForBombPlacement = 500;
 int bombPositionRow = -1;
 int bombPositionCol = -1;
 int bombsUsed = 0;
 unsigned long lastSavedElapsedTime = 0;
 unsigned long elapsedTime;  // in seconds
+const int oneSecondInMs = 1000;
 bool waitingForUserInputEndGame = true;
 enum GameState {
   IN_MENU,
@@ -95,6 +97,7 @@ byte bombChar[] = {
   B01110,
   B00000
 };
+const char* endGameMessages[2] = { "Good job!", "Keep trying!" };
 
 void setup() {
   Serial.begin(9600);
@@ -133,7 +136,7 @@ void loop() {
     resetGame();
     resetGameOnJoystickLongPress();
   } else {
-    handleResetGame();  // TODO: investigating this bs
+    handleResetGame(); 
     handleJoystickPressEndGame();
   }
 }
@@ -153,11 +156,12 @@ void handleStartGameChange() {
 void handleJoystickPressEndGame() {
   if (joystickManager.isPressed()) {
     waitingForUserInputEndGame = false;
+    delay(200); // add a small delay before taking the user to the menu
   }
 }
 
 void calculateElapsedTime() {
-  if (millis() - lastSavedElapsedTime > 1000) {
+  if (millis() - lastSavedElapsedTime > oneSecondInMs) {
     elapsedTime += 1;
     lastSavedElapsedTime = millis();
   }
@@ -169,7 +173,7 @@ void applyConfigurationSettings() {
 }
 
 void handleBombPlacement() {
-  if (millis() - lastSavedElapsedTime < 500) {
+  if (millis() - lastSavedElapsedTime < startDelayForBombPlacement) {
     return;
   }
 
@@ -290,10 +294,10 @@ void checkGameWon() {
 void handleResetGame() {
   if (gameState == WON) {
     printByte(smile);
-    lcdMenu.displayEndGameMessage("Good job!");
+    lcdMenu.displayEndGameMessage(endGameMessages[0]);
   } else if (gameState == LOST) {
     printByte(sad);
-    lcdMenu.displayEndGameMessage("Keep trying!");
+    lcdMenu.displayEndGameMessage(endGameMessages[1]);
   }
 
   if (gameState != RESET && waitingForUserInputEndGame) {
