@@ -8,6 +8,7 @@ This repository contains the assignments for the "Introduction to Robotics" cour
 - [Homework 4](#homework-4)
 - [Homework 5](#homework-5)
 - [Homework 6](#homework-6)
+- [Homework 7](#homework-7)
 
 ## Homework 1
 ### Requirement
@@ -116,3 +117,20 @@ Develop a Bomberman-like game using an 8x8 LED matrix. Implement various feature
 
 ### Video
 https://www.youtube.com/watch?v=tHLFfbs_FkI
+
+## Homework 7
+### Requirement
+Implement an LCD menu for the game developed in [homework 6](#homework-6). Implement an About section with information such as game name, author, and github link. <br>
+There should also be a settings section, where the user can change the LCD or matrix brightness. The LCD should display relevant information during the game and an appropriate message upon ending.
+
+### File
+[Homework 7 file](homework7/homework7.ino)
+
+<details><summary><h3>Photo</h3></summary>
+
+![Homework 7 photo](homework7/photo.jpg)
+
+</details>
+
+### Video
+https://youtu.be/bRdJDQXD-AQ
